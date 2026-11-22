@@ -1,6 +1,6 @@
 # whisper
 
-> This directory is a sub-project of [`private-ai-stack`](../..).
+> This directory is a sub-project of [`private-ai-stack`](https://github.com/HoHuiHsieh/private-ai-stack).
 
 Speaches (faster-whisper), an OpenAI-compatible speech-to-text server. Internal only: no host port.
 
