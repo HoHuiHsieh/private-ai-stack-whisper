@@ -1,0 +1,4 @@
+# Dev overrides for whisper. Started by: ./start.sh dev whisper
+# The Speaches image has no dev build and no source to hot reload, so there are no overrides.
+# The file exists only so ./start.sh dev accepts this service.
+services: {}

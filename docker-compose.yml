@@ -1,0 +1,34 @@
+# Prod services for whisper. Started by: ./start.sh prod whisper
+# Speaches (faster-whisper): OpenAI-compatible speech-to-text. Internal only (no ports).
+# Reachable from other containers on the backend network at http://whisper:8000/v1
+# (agent-service via WHISPER_URL, Open WebUI audio settings).
+name: private-ai-stack-whisper
+
+services:
+  whisper:
+    image: ghcr.io/speaches-ai/speaches:latest-cuda
+    env_file:
+      - ./env/.env.whisper           # WHISPER__<NAME> settings, no secrets
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    volumes:
+      - whisper_models:/home/ubuntu/.cache/huggingface   # downloaded models, kept across restarts
+    restart: unless-stopped
+    networks:
+      backend:
+        aliases: [whisper]
+
+volumes:
+  whisper_models:
+    external: true
+    name: private-ai-stack_whisper_models   # downloaded models, kept across restarts
+
+networks:
+  backend:
+    external: true
+    name: private-ai-stack_backend          # root stack network; start the root stack first
